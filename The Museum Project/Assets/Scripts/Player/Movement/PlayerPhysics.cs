@@ -19,7 +19,12 @@ public class PlayerPhysics : MonoBehaviour
     [SerializeField]
     private float airControl;
 
+    // current maximum input speed of the player
     private float maxSpeed;
+
+    // metrics for ground detection
+    //private float playerHeight;
+    //private Vector3 boxDim;
 
 
     private GrappleHook grappleHook;
@@ -28,6 +33,11 @@ public class PlayerPhysics : MonoBehaviour
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>();
+
+        // ground detection constants
+        //playerHeight = (transform.localScale.y / 2f);
+        //Vector3 boxDim = transform.localScale;
+        //boxDim = new Vector3(boxDim.x - 0.5f, boxDim.y + 0.5f, boxDim.z - 0.5f);
 
         grappleHook = gameObject.GetComponent<GrappleHook>();
     }
@@ -74,30 +84,8 @@ public class PlayerPhysics : MonoBehaviour
         // apply the force of gravity to the player
         rb.AddForce(gravity);
 
-        //Debug.Log(isGrounded());
+        Debug.Log(isGrounded());
     }
-
-
-    /*
-    if (Input.GetKey(KeyCode.W))
-    {
-        rb.AddForce(Vector3.ProjectOnPlane(transform.forward, Vector3.up).normalized * walkingAcceleration);
-    }
-    */
-    /*
-    float currentVelocity = rb.velocity.magnitude;
-    if (currentVelocity < maxSpeed)
-    {
-        rb.AddRelativeForce(movement);
-    }
-    */
-    //movement *= (maxSpeed - currentVelocity) / maxSpeed;
-    /*
-    if (rb.velocity.magnitude > maxSpeed)
-    {
-        rb.velocity = rb.velocity.normalized * maxSpeed;
-    }
-    */
 
     public Vector3 GetMoveInputs()
     {
@@ -123,10 +111,15 @@ public class PlayerPhysics : MonoBehaviour
 
     public bool isGrounded()
     {
+        // Raycast using ray
         //return Physics.Raycast(transform.position, -Vector3.up, playerHeight + 0.1f);
-        float height = (transform.localScale.y / 2f) + 0.001f;
-        Vector3 boxCenter = transform.position - new Vector3(0f, height, 0f);
 
-        return Physics.CheckBox(boxCenter, transform.localScale);
+        // Raycast using box
+        //Vector3 boxCenter = transform.position - new Vector3(0f, playerHeight, 0f);
+        //return Physics.CheckBox(boxCenter, boxDim);
+
+        // Raycast using box hardcoded
+        Vector3 boxCenter = transform.position - new Vector3(0f, 0.5f, 0f);
+        return Physics.CheckBox(boxCenter, new Vector3(0.45f, 0.55f, 0.45f));
     }
 }
