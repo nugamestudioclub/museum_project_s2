@@ -26,8 +26,21 @@ public class PlayerPhysics : MonoBehaviour
     //private float playerHeight;
     //private Vector3 boxDim;
 
+    // speed of the player in the previous frame
+    private float prevFrameSpeed;
 
+    // the minimum change in speed which will result in damage being taken
+    [SerializeField]
+    private float speedDamageThreshold;
+    // the ratio of speed change to damage taken
+    [SerializeField]
+    private float speedToDamage;
+
+
+    // reference to GrappleHook script
     private GrappleHook grappleHook;
+    // referendce to PlayerStats script
+    private PlayerStats playerStats;
 
     // Start is called before the first frame update
     void Start()
@@ -40,6 +53,8 @@ public class PlayerPhysics : MonoBehaviour
         //boxDim = new Vector3(boxDim.x - 0.5f, boxDim.y + 0.5f, boxDim.z - 0.5f);
 
         grappleHook = gameObject.GetComponent<GrappleHook>();
+        playerStats = gameObject.GetComponent<PlayerStats>();
+        prevFrameSpeed = 0f;
     }
 
     // Update is called once per frame
@@ -84,7 +99,13 @@ public class PlayerPhysics : MonoBehaviour
         // apply the force of gravity to the player
         rb.AddForce(gravity);
 
-        Debug.Log(isGrounded());
+        float deltaSpeed = Mathf.Abs(rb.velocity.magnitude - prevFrameSpeed);
+        if (deltaSpeed > speedDamageThreshold)
+        {
+            Debug.Log(deltaSpeed - speedDamageThreshold);
+            playerStats.ChangeHealth(-speedToDamage * (deltaSpeed - speedDamageThreshold));
+        }
+        prevFrameSpeed = rb.velocity.magnitude;
     }
 
     public Vector3 GetMoveInputs()

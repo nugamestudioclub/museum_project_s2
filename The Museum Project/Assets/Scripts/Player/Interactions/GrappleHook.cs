@@ -17,11 +17,15 @@ public class GrappleHook : MonoBehaviour
     public bool grappled;
     private Vector3 grapplePos;
 
+    [SerializeField]
+    private LineRenderer lineRender;
+
     // Start is called before the first frame update
     void Start()
     {
         grappled = false;
         grapplePos = Vector3.zero;
+        lineRender.enabled = false;
     }
 
     // Update is called once per frame
@@ -34,6 +38,11 @@ public class GrappleHook : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.K))
         {
             ReleaseGrapple();
+        }
+        if (grappled)
+        {
+            lineRender.SetPosition(0, gameObject.transform.position);
+            lineRender.SetPosition(1, grapplePos);
         }
     }
 
@@ -50,6 +59,7 @@ public class GrappleHook : MonoBehaviour
                 Destroy(curPointObj);
             }
             curPointObj = Instantiate(grapplePointPrefab, hit.point, Quaternion.identity);
+            lineRender.enabled = true;
         }
     }
 
@@ -61,6 +71,7 @@ public class GrappleHook : MonoBehaviour
         {
             Destroy(curPointObj);
         }
+        lineRender.enabled = false;
     }
 
     public Vector3 PullForce(Vector3 playerPos)
