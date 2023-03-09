@@ -46,24 +46,29 @@ public class GrappleHook : MonoBehaviour
         }
     }
 
-    void ShootGrapple()
+    public void ShootGrapple()
     {
+        // perform a raycast from the player's reticle
         RaycastHit hit;
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, maxGrappleThrow))
         {
-            Debug.DrawRay(Camera.main.transform.position, hit.point, Color.green, 5f);
-            grappled = true;
-            grapplePos = hit.point;
-            if (curPointObj != null)
+            //Debug.DrawRay(Camera.main.transform.position, hit.point, Color.green, 5f);
+            TraversalProperties tp = hit.collider.gameObject.GetComponent<TraversalProperties>();
+            if (tp == null || tp.canGrappleOnto)
             {
-                Destroy(curPointObj);
+                grappled = true;
+                grapplePos = hit.point;
+                if (curPointObj != null)
+                {
+                    Destroy(curPointObj);
+                }
+                curPointObj = Instantiate(grapplePointPrefab, hit.point, Quaternion.identity);
+                lineRender.enabled = true;
             }
-            curPointObj = Instantiate(grapplePointPrefab, hit.point, Quaternion.identity);
-            lineRender.enabled = true;
         }
     }
 
-    void ReleaseGrapple()
+    public void ReleaseGrapple()
     {
         grappled = false;
         grapplePos = Vector3.zero;

@@ -66,6 +66,7 @@ public class PlayerPhysics : MonoBehaviour
             // apply an upward force to the player
             rb.AddForce(new Vector3(0f, jumpForce, 0f));
         }
+        // change current max speed depending on sprinting or not
         if (Input.GetKey(KeyCode.LeftShift))
         {
             maxSpeed = maxRunSpeed;
@@ -99,13 +100,26 @@ public class PlayerPhysics : MonoBehaviour
         // apply the force of gravity to the player
         rb.AddForce(gravity);
 
+        // calculate the change in player speed this frame
         float deltaSpeed = Mathf.Abs(rb.velocity.magnitude - prevFrameSpeed);
+
+        // apply force damage to player depending on change in speed
         if (deltaSpeed > speedDamageThreshold)
         {
             Debug.Log(deltaSpeed - speedDamageThreshold);
             playerStats.ChangeHealth(-speedToDamage * (deltaSpeed - speedDamageThreshold));
         }
+        // update speed record for next frame
         prevFrameSpeed = rb.velocity.magnitude;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        TraversalProperties tp = other.gameObject.GetComponent<TraversalProperties>();
+        if (tp != null && tp.lethalToEnter)
+        {
+            playerStats.Respawn();
+        }
     }
 
     public Vector3 GetMoveInputs()
@@ -142,5 +156,12 @@ public class PlayerPhysics : MonoBehaviour
         // Raycast using box hardcoded
         Vector3 boxCenter = transform.position - new Vector3(0f, 0.5f, 0f);
         return Physics.CheckBox(boxCenter, new Vector3(0.45f, 0.55f, 0.45f));
+    }
+
+    public void Reset()
+    {
+        prevFrameSpeed = 0f;
+        rb.velocity = Vector3.zero;
+        grappleHook.ReleaseGrapple();
     }
 }
