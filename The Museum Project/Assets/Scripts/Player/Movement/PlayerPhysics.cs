@@ -17,10 +17,12 @@ public class PlayerPhysics : MonoBehaviour
     [SerializeField]
     private float jumpForce;
     [SerializeField]
-    private float airControl;
+    private float defaultAirControl;
 
     // current maximum input speed of the player
     private float maxSpeed;
+    // current air control ratio experienced by the player
+    private float airControl;
 
     // metrics for ground detection
     //private float playerHeight;
@@ -52,6 +54,9 @@ public class PlayerPhysics : MonoBehaviour
         //Vector3 boxDim = transform.localScale;
         //boxDim = new Vector3(boxDim.x - 0.5f, boxDim.y + 0.5f, boxDim.z - 0.5f);
 
+        maxSpeed = maxWalkSpeed;
+        airControl = defaultAirControl;
+
         grappleHook = gameObject.GetComponent<GrappleHook>();
         playerStats = gameObject.GetComponent<PlayerStats>();
         prevFrameSpeed = 0f;
@@ -74,6 +79,15 @@ public class PlayerPhysics : MonoBehaviour
         else
         {
             maxSpeed = maxWalkSpeed;
+        }
+        // change air control depending on state of player
+        if (grappleHook.grappled)
+        {
+            airControl = grappleHook.grappledAirControl;
+        }
+        else
+        {
+            airControl = defaultAirControl;
         }
     }
 

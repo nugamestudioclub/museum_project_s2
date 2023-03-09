@@ -11,6 +11,9 @@ public class GrappleHook : MonoBehaviour
     private float grappleStrength;
 
     [SerializeField]
+    public float grappledAirControl;
+
+    [SerializeField]
     private GameObject grapplePointPrefab;
     private GameObject curPointObj;
 
