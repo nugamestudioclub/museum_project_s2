@@ -125,6 +125,8 @@ public class PlayerPhysics : MonoBehaviour
         }
         // update speed record for next frame
         prevFrameSpeed = rb.velocity.magnitude;
+
+        Debug.Log(isGrounded());
     }
 
     private void OnTriggerEnter(Collider other)
@@ -169,7 +171,7 @@ public class PlayerPhysics : MonoBehaviour
 
         // Raycast using box hardcoded
         Vector3 boxCenter = transform.position - new Vector3(0f, 0.5f, 0f);
-        return Physics.CheckBox(boxCenter, new Vector3(0.45f, 0.55f, 0.45f));
+        return Physics.CheckBox(boxCenter, new Vector3(0.25f, 0.52f, 0.25f));
     }
 
     public void Reset()
