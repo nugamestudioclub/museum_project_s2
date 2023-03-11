@@ -41,6 +41,9 @@ public class PlayerPhysics : MonoBehaviour
 
     // reference to GrappleHook script
     private GrappleHook grappleHook;
+    // reference to JetPack script
+    private JetPack jetPack;
+
     // referendce to PlayerStats script
     private PlayerStats playerStats;
 
@@ -58,6 +61,7 @@ public class PlayerPhysics : MonoBehaviour
         airControl = defaultAirControl;
 
         grappleHook = gameObject.GetComponent<GrappleHook>();
+        jetPack = gameObject.GetComponent<JetPack>();
         playerStats = gameObject.GetComponent<PlayerStats>();
         prevFrameSpeed = 0f;
     }
@@ -111,6 +115,9 @@ public class PlayerPhysics : MonoBehaviour
         // apply the force of a potential grapple hook to the player
         rb.AddForce(grappleHook.PullForce(transform.position));
 
+        // apply the force of a potential jetpack to the player
+        rb.AddForce(jetPack.ThrustForce());
+
         // apply the force of gravity to the player
         rb.AddForce(gravity);
 
@@ -120,13 +127,13 @@ public class PlayerPhysics : MonoBehaviour
         // apply force damage to player depending on change in speed
         if (deltaSpeed > speedDamageThreshold)
         {
-            Debug.Log(deltaSpeed - speedDamageThreshold);
+            //Debug.Log(deltaSpeed - speedDamageThreshold);
             playerStats.ChangeHealth(-speedToDamage * (deltaSpeed - speedDamageThreshold));
         }
         // update speed record for next frame
         prevFrameSpeed = rb.velocity.magnitude;
 
-        Debug.Log(isGrounded());
+        //Debug.Log(isGrounded());
     }
 
     private void OnTriggerEnter(Collider other)

@@ -29,6 +29,8 @@ public class PlayerStats : MonoBehaviour
     private Image hydrationContent;
     private TMP_Text naniteContent;
 
+    private Image thrustContent;
+
     [SerializeField]
     private Transform spawnpoint;
 
@@ -46,6 +48,8 @@ public class PlayerStats : MonoBehaviour
         hungerContent = statUI.transform.Find("Hunger Bar/Hunger Value").gameObject.GetComponent<Image>();
         hydrationContent = statUI.transform.Find("Hydration Bar/Hydration Value").gameObject.GetComponent<Image>();
         naniteContent = statUI.transform.Find("Nanite Bar").gameObject.GetComponent<TMP_Text>();
+
+        thrustContent = statUI.transform.Find("Thrust Bar/Thrust Value").gameObject.GetComponent<Image>();
 
         SetNanites(nanites);
 
@@ -146,5 +150,10 @@ public class PlayerStats : MonoBehaviour
         transform.position = spawnpoint.position;
         transform.rotation = spawnpoint.rotation;
         playerPhysics.Reset();
+    }
+
+    public void SetThrust(float amount)
+    {
+        thrustContent.fillAmount = amount;
     }
 }
