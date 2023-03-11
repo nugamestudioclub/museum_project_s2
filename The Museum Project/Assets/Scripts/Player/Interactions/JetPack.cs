@@ -36,7 +36,7 @@ public class JetPack : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.J))
+        if (Input.GetKey(KeyCode.Q))
         {
             if (loftTime > 0f)
             {
@@ -57,7 +57,6 @@ public class JetPack : MonoBehaviour
             }
         }
         playerStats.SetThrust(loftTime / maxLoftTime);
-        Debug.Log(loftTime);
     }
 
     public Vector3 ThrustForce()

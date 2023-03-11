@@ -101,15 +101,23 @@ public class PlayerPhysics : MonoBehaviour
         Vector3 movement = GetMoveInputs();
         // calculate the force propelling the player along the x and z axis in this frame
         movement = movement.normalized * walkingForce;
-        // scale movement inversely by current velocity and current maxSpeed
-        Vector3 horizontalVel = Vector3.ProjectOnPlane(rb.velocity, transform.up);
-        movement *= Mathf.Max(0f, 1 - (horizontalVel.magnitude / maxSpeed));
+
         // scale movement force if not on ground
         if (!isGrounded())
         {
             movement *= airControl;
         }
-        // apply the movement force relative to the player's transform
+
+        // scale movement inversely by current velocity and current maxSpeed
+        Vector3 horizontalVel = Vector3.ProjectOnPlane(rb.velocity, transform.up);
+        Vector3 relativeMove = transform.right * movement.x + transform.forward * movement.z;
+        if ((horizontalVel + relativeMove).magnitude >= horizontalVel.magnitude)
+        {
+            movement *= Mathf.Max(0f, 1 - (horizontalVel.magnitude / maxSpeed));
+        }
+        //movement *= Mathf.Max(0f, 1 - (horizontalVel.magnitude / maxSpeed));
+
+        // apply the force of input movement to the player
         rb.AddRelativeForce(movement);
 
         // apply the force of a potential grapple hook to the player

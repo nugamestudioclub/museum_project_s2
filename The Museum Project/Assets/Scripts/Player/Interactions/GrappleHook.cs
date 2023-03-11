@@ -34,11 +34,11 @@ public class GrappleHook : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.L))
+        if (Input.GetKeyDown(KeyCode.L) || Input.GetMouseButtonDown(0))
         {
             ShootGrapple();
         }
-        if (Input.GetKeyDown(KeyCode.K))
+        if (Input.GetKeyDown(KeyCode.K) || Input.GetMouseButtonDown(1))
         {
             ReleaseGrapple();
         }

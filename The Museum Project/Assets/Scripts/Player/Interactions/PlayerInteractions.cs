@@ -32,13 +32,16 @@ public class PlayerInteractions : MonoBehaviour
             InteractWithObject();
         }
 
+        /*
         if (Input.GetKeyDown(KeyCode.Q))
         {
             DisassembleObject();
         }
+        */
 
         if (Input.GetKeyDown(KeyCode.E))
         {
+            DisassembleObject();
             PlaceObject();
         }
 
