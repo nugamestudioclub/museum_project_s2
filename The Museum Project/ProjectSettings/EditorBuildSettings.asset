@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/LevelExample01.unity
     guid: 7a087f5ab55b24495acfe9fb7f3b5f6f
   - enabled: 1
-    path: Assets/Scenes/Demo.unity
+    path: Assets/Scenes/Demo/Chaos.unity
     guid: 9a1c51e4a5318464498d4d8325640d90
   - enabled: 0
     path: Assets/Scenes/EnvironmentTest.unity
