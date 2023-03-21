@@ -29,7 +29,12 @@ public class PlayerStats : MonoBehaviour
     private Image hydrationContent;
     private TMP_Text naniteContent;
 
-    private bool isAlive = true;
+    private Image thrustContent;
+
+    [SerializeField]
+    private Transform spawnpoint;
+
+    private PlayerPhysics playerPhysics;
 
     // Start is called before the first frame update
     void Start()
@@ -44,16 +49,17 @@ public class PlayerStats : MonoBehaviour
         hydrationContent = statUI.transform.Find("Hydration Bar/Hydration Value").gameObject.GetComponent<Image>();
         naniteContent = statUI.transform.Find("Nanite Bar").gameObject.GetComponent<TMP_Text>();
 
+        thrustContent = statUI.transform.Find("Thrust Bar/Thrust Value").gameObject.GetComponent<Image>();
+
         SetNanites(nanites);
+
+        playerPhysics = gameObject.GetComponent<PlayerPhysics>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (isAlive)
-        {
-            TickStats();
-        }
+        TickStats();
     }
 
     //called each frame to update stat values
@@ -68,17 +74,14 @@ public class PlayerStats : MonoBehaviour
         if (health == 0)
         {
             Debug.Log("player died");
-            isAlive = false;
+            Respawn();
         }
     }
 
     public void ChangeStat(ref float stat, float maxStat, float change, ref Image statContent)
     {
-        if (isAlive)
-        {
-            stat = Mathf.Clamp(stat + change, 0f, maxStat);
-            statContent.fillAmount = Mathf.Clamp(stat / maxStat, 0f, 1f);
-        }
+        stat = Mathf.Clamp(stat + change, 0f, maxStat);
+        statContent.fillAmount = Mathf.Clamp(stat / maxStat, 0f, 1f);
     }
 
     public void TickHunger()
@@ -136,5 +139,21 @@ public class PlayerStats : MonoBehaviour
     public void ChangeNanites(int c)
     {
         SetNanites(nanites + c);
+    }
+
+    public void Respawn()
+    {
+        // Note, this respawn script will have to be more advanced in later versions.
+        ChangeHealth(maxHealth);
+        ChangeHunger(maxHunger);
+        ChangeHydration(maxHydration);
+        transform.position = spawnpoint.position;
+        transform.rotation = spawnpoint.rotation;
+        playerPhysics.Reset();
+    }
+
+    public void SetThrust(float amount)
+    {
+        thrustContent.fillAmount = amount;
     }
 }

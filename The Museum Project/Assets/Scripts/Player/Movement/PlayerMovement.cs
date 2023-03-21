@@ -21,6 +21,8 @@ public class PlayerMovement : MonoBehaviour
     private float gravity = -10f;
 
     private bool _isGrounded;
+
+    private GrappleHook grappleHook;
     
     #endregion
 
@@ -32,6 +34,7 @@ public class PlayerMovement : MonoBehaviour
 
         _moveSpeed = walkSpeed;
         _sprintBonus = sprintSpeed - walkSpeed;
+        grappleHook = gameObject.GetComponent<GrappleHook>();
     }
 
     // Update is called once per frame
@@ -61,6 +64,9 @@ public class PlayerMovement : MonoBehaviour
 
         // gravity
         playerVelocity.y += gravity * Time.deltaTime;
+
+        // force applied by grapple hook
+        //playerVelocity += grappleHook.PullForce(transform.position) * Time.deltaTime;
 
         // final player move
         _controller.Move((playerVelocity + xzMove) * Time.deltaTime);
