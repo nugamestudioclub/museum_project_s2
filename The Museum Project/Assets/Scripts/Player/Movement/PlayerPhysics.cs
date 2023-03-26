@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerPhysics : MonoBehaviour
 {
+    // measured in meters per second squared
     [SerializeField]
     private Vector3 gravity;
 
@@ -14,6 +15,7 @@ public class PlayerPhysics : MonoBehaviour
     private float maxWalkSpeed;
     [SerializeField]
     private float maxRunSpeed;
+    // measured in N applied when space is pressed
     [SerializeField]
     private float jumpForce;
     [SerializeField]
@@ -75,6 +77,7 @@ public class PlayerPhysics : MonoBehaviour
             // apply an upward force to the player
             rb.AddForce(new Vector3(0f, jumpForce, 0f));
         }
+
         // change current max speed depending on sprinting or not
         if (Input.GetKey(KeyCode.LeftShift))
         {
@@ -84,22 +87,13 @@ public class PlayerPhysics : MonoBehaviour
         {
             maxSpeed = maxWalkSpeed;
         }
-        // change air control depending on state of player
-        if (grappleHook.grappled)
-        {
-            airControl = grappleHook.grappledAirControl;
-        }
-        else
-        {
-            airControl = defaultAirControl;
-        }
     }
 
     void FixedUpdate()
     {
         // get the input values for player movement
         Vector3 movement = GetMoveInputs();
-        // calculate the force propelling the player along the x and z axis in this frame
+        // calculate the velocity change of the player based on input
         movement = movement.normalized * walkingForce;
 
         // scale movement force if not on ground
@@ -108,17 +102,21 @@ public class PlayerPhysics : MonoBehaviour
             movement *= airControl;
         }
 
-        // scale movement inversely by current velocity and current maxSpeed
-        Vector3 horizontalVel = Vector3.ProjectOnPlane(rb.velocity, transform.up);
         Vector3 relativeMove = transform.right * movement.x + transform.forward * movement.z;
-        if ((horizontalVel + relativeMove).magnitude >= horizontalVel.magnitude)
-        {
-            movement *= Mathf.Max(0f, 1 - (horizontalVel.magnitude / maxSpeed));
-        }
-        //movement *= Mathf.Max(0f, 1 - (horizontalVel.magnitude / maxSpeed));
+        Vector3 flatCurVelocity = Vector3.ProjectOnPlane(rb.velocity, transform.up);
 
-        // apply the force of input movement to the player
-        rb.AddRelativeForce(movement);
+        // calculate the velocity the player would have when adding input velocity to it
+        Vector3 nextVelocity = flatCurVelocity + relativeMove * Time.deltaTime;
+
+        // check if the player's next velocity has a magnitude above walking speed
+        if (nextVelocity.magnitude > maxSpeed)
+        {
+            // scale the player's next velocity to equal their current speed
+            nextVelocity = nextVelocity.normalized * flatCurVelocity.magnitude;
+        }
+
+        // set the player's current velocity to their next velocity in the xz-plane
+        rb.velocity = new Vector3(nextVelocity.x, rb.velocity.y, nextVelocity.z);
 
         // apply the force of a potential grapple hook to the player
         rb.AddForce(grappleHook.PullForce(transform.position));
@@ -127,7 +125,7 @@ public class PlayerPhysics : MonoBehaviour
         rb.AddForce(jetPack.ThrustForce());
 
         // apply the force of gravity to the player
-        rb.AddForce(gravity);
+        rb.AddForce(gravity, ForceMode.Acceleration);
 
         // calculate the change in player speed this frame
         float deltaSpeed = Mathf.Abs(rb.velocity.magnitude - prevFrameSpeed);
