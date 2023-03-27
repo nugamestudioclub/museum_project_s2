@@ -71,15 +71,17 @@ public class PlayerPhysics : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        bool grounded = isGrounded();
+
         // if jump key is pressed
-        if (Input.GetButtonDown("Jump") && isGrounded())
+        if (Input.GetButtonDown("Jump") && grounded)
         {
             // apply an upward force to the player
             rb.AddForce(new Vector3(0f, jumpForce, 0f));
         }
 
         // change current max speed depending on sprinting or not
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift) && grounded)
         {
             maxSpeed = maxRunSpeed;
         }
@@ -111,8 +113,17 @@ public class PlayerPhysics : MonoBehaviour
         // check if the player's next velocity has a magnitude above walking speed
         if (nextVelocity.magnitude > maxSpeed)
         {
-            // scale the player's next velocity to equal their current speed
-            nextVelocity = nextVelocity.normalized * flatCurVelocity.magnitude;
+            // if the player is currently moving below their maxSpeed and trying to accelerate up to it
+            if (flatCurVelocity.magnitude < maxSpeed)
+            {
+                // scale the player's next velocity to be equal to their maxSpeed
+                nextVelocity = nextVelocity.normalized * maxSpeed;
+            }
+            else
+            {
+                // else, scale the player's next velocity to equal their current speed
+                nextVelocity = nextVelocity.normalized * flatCurVelocity.magnitude;
+            }
         }
 
         // set the player's current velocity to their next velocity in the xz-plane
