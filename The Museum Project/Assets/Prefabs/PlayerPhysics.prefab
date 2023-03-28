@@ -4944,7 +4944,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gravity: {x: 0, y: -22, z: 0}
-  walkingForce: 200
+  walkingForce: 40
   maxWalkSpeed: 6
   maxRunSpeed: 12
   jumpForce: 400
