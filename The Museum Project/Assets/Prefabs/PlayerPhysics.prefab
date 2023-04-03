@@ -4943,7 +4943,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6371500714cc7409c92e2a14cced0fca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravity: {x: 0, y: -22, z: 0}
+  gravity: {x: 0, y: -16, z: 0}
   walkingForce: 200
   maxWalkSpeed: 6
   maxRunSpeed: 12
@@ -4963,7 +4963,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e7f9353d2ac547538de04c5e5988dd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxGrappleThrow: 100
+  maxGrappleThrow: 20
   grappleStrength: 40
   grappledAirControl: 0.1
   grapplePointPrefab: {fileID: 1711560669011364773, guid: bd09ab293889f4de5a23a37a549c4b4b, type: 3}
@@ -4981,7 +4981,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8d226b0302f94fd38153b488954c2b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thrustStrength: 35
+  thrustStrength: 45
   maxLoftTime: 2
   loftReclaimRate: 2
   flames: {fileID: 2434401767122411066}
@@ -5119,7 +5119,7 @@ Camera:
   m_FOVAxisMode: 0
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
-  m_FocalLength: 50
+  m_FocalLength: 20.78461
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -5128,7 +5128,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 60.000004
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -5141,7 +5141,7 @@ Camera:
   m_TargetEye: 3
   m_HDR: 0
   m_AllowMSAA: 0
-  m_AllowDynamicResolution: 0
+  m_AllowDynamicResolution: 1
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
@@ -5166,7 +5166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 867f6d1560c5c4838bf513a400b50bec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseSensitivity: 1000
+  mouseSensitivity: 250
   xRotation: 0
 --- !u!114 &4850366875759246109
 MonoBehaviour:
@@ -5211,7 +5211,7 @@ MonoBehaviour:
   flipYMode: 0
   xrRendering: 1
   fullscreenPassthrough: 0
-  allowDynamicResolution: 0
+  allowDynamicResolution: 1
   customRenderingSettings: 0
   invertFaceCulling: 0
   probeLayerMask:
