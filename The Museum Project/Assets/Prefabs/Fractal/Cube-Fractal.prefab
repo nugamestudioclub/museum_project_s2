@@ -12,12 +12,13 @@ GameObject:
   - component: {fileID: 5301975429098825310}
   - component: {fileID: 7958020821712638612}
   - component: {fileID: 8768794793988492818}
+  - component: {fileID: 1273400339}
   m_Layer: 0
   m_Name: Cube-Fractal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &9096071794141948411
 Transform:
@@ -26,9 +27,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8462384328682746689}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 18.853638, y: 15.73, z: 25.006052}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5000001, y: 0.5000002, z: 0.50000006}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -62,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c7efaa0cf6c4b2e49a8f62c999cb5b21, type: 2}
+  - {fileID: 2100000, guid: 8ea3e69c74b1c8f4b90a21e5deaf341f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -98,3 +99,17 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4627175317387781038, guid: 898ed10e516331c40a04b0de02f53e7e, type: 3}
+--- !u!114 &1273400339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8462384328682746689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7990ac7d1b27486c887ffb3550956cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canGrappleOnto: 0
+  lethalToEnter: 0
