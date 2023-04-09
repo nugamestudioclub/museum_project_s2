@@ -292,7 +292,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d7593b3a9277ac4696b20006c21dde2, type: 3}
   m_Name: VisualEnvironment
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   skyType:
     m_OverrideState: 0
     m_Value: 1
@@ -328,16 +328,16 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 1
   enable:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 0
   length:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 0.15
   opacity:
     m_OverrideState: 0
     m_Value: 1
   distanceScaleFactor:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 0.5
   maxDistance:
     m_OverrideState: 0
@@ -423,7 +423,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcf384b154398e341b6b29969c078198, type: 3}
   m_Name: MotionBlur
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   quality:
     m_OverrideState: 0
     m_Value: 1
